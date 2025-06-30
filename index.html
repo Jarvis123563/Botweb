@@ -88,6 +88,29 @@
        style="width: 100%; height: 100%; object-fit: cover; object-position: 39% center;">
   </div>
 </div>
+  <div id="averageRating" style="font-size: 24px; color: #007bff; margin-top: 20px;"></div>
+  
+  <script>
+  // Load and show average rating
+  const BIN_ID = "685cbac98a456b7966b5cfaf";
+  const API_KEY = "$2a$10$x7VBgNRztww.OlDubg9dS.Q86N6zGeCi/6oSlWc3NE7wYYAW3deia";
+
+  fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+    headers: {
+      "X-Master-Key": API_KEY
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    const ratings = data.record.map(entry => entry.rating);
+    const avg = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+    document.getElementById("averageRating").textContent = `⭐ Average Rating: ${avg.toFixed(1)} / 5`;
+  })
+  .catch(err => {
+    console.error("Error fetching average rating:", err);
+  });
+  </script>
+  
 
   <script>
     const stars = document.querySelectorAll('.star');
